@@ -1,36 +1,17 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:api12/models/model.dart';
-import 'package:api12/controllers/api_services.dart';
+import 'package:api12/controllers/random_activity_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:get/get.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
 
- 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+class MyHomePage extends StatelessWidget {
+  MyHomePage({super.key});
 
-class _MyHomePageState extends State<MyHomePage> {
-  RandomActivity? _model ;
- 
+ ActivityController controller = Get.put(ActivityController());
 @override
-  void initState() {
-    fetchData();
-   
-    super.initState();
-    
-  }
-
-void fetchData() async{
-  
-   _model = await getData();
- setState(() {
-  
- });
-}
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +37,11 @@ return Scaffold(
                 48.height,
                 Text('Task Of The day!', style: boldTextStyle(size: 20, color: white)),
                 16.height,
-               _model==null ?const Center(child: SpinKitChasingDots(color: Colors.white)
+               controller.model==null ?const Center(child: SpinKitChasingDots(color: Colors.white)
 
 ):
                 Text(
-                  _model!.activity,
+                 controller.model!.activity,
                   style: primaryTextStyle(size: 15, color: white),
                   textAlign: TextAlign.center,
                 ).paddingSymmetric(vertical: 8, horizontal: 60),
@@ -86,7 +67,7 @@ return Scaffold(
                           size: 50,
                         ),
                       ),
-                      onTap: (){fetchData();} ,
+                      onTap: (){controller.fetchData();} ,
                 ),
               ],
             );
